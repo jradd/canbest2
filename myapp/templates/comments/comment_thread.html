@@ -1,0 +1,53 @@
+{% extends "posts/base.html" %}
+{% load urlify %}
+{% load crispy_forms_tags %}
+{% block title %}{{ title }}{% endblock %}
+
+{% block content %}
+
+<div class="row">
+    <p class="lead">Comments</p>
+
+    <div>
+        <blockquote>
+            <p>{{ comment.content }}</p>
+            <small class="blockquote-reverse"><b>{{ comment.user }}</b> {{comment.timestamp|timesince}} ago | {% if comment.children.count > 1 %}
+                {{comment.children.count }} Comments {% elif comment.children.count == 1%} {{ comment.children.count }}
+                Comment {%else %} 0 Comments {% endif %}
+            </small>
+            <br>
+            <p><a href="{{ comment.get_delete_url }}">{% if request.user == comment.user %}Delete{% endif %}</a></p>
+
+            <hr>
+            <div class="">
+                {% for reply in comment.children %}
+                <blockquote>
+                    <p>{{ reply.content }}</p>
+                    <small><b>{{ reply.user }}</b> {{reply.timestamp|timesince}} ago</small>
+                    <br>
+                    <p><a href="{{ reply.get_delete_url }}">{% if request.user == comment.user %}Delete{% endif %}</a>
+                    </p>
+                </blockquote>
+                <hr>
+                {% endfor %}
+
+                {% if request.user.is_authenticated %}
+
+                <form method="post">
+                    {% csrf_token %}
+                    {{ comment_form|crispy }}
+                    <input type="hidden" name="parent_id" value="{{ comment.id }}">
+                    <input class="btn btn-success" type="submit" value="Reply">
+                </form>
+                {% else %}
+                <p>
+                    <a href="{% url 'accounts:login' %}?next={{comment.get_absolute_url}}" class="btn btn-success">Sign in to post comments</a>
+                </p>
+                {% endif %}
+            </div>
+        </blockquote>
+        <hr>
+    </div>
+
+</div>
+{% endblock %}

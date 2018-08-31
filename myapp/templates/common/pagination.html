@@ -1,0 +1,19 @@
+<div class="pagination">
+    <span class="step-links">
+        {% if instance.has_previous %}
+            <a href="?{{ page_request_var }}=1">&laquo; first</a>
+            <a href="?{{ page_request_var }}={{ instance.previous_page_number }}{% if request.GET.q %}&q={{ request.GET.q }}{% endif %}">previous</a>
+        {% endif %}
+
+        <span class="current">
+            {% if instance.paginator.num_pages %}
+                Page {{ instance.number }} of {{ instance.paginator.num_pages }}.
+            {% endif %}
+        </span>
+
+        {% if instance.has_next %}
+            <a href="?{{ page_request_var }}={{ instance.next_page_number }}{% if request.GET.q %}&q={{ request.GET.q }}{% endif %}">next</a>
+            <a href="?{{ page_request_var }}={{ instance.paginator.num_pages }}{% if request.GET.q %}&q={{ request.GET.q }}{% endif %}">last &raquo;</a>
+        {% endif %}
+    </span>
+</div>

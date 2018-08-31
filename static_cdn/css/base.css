@@ -1,0 +1,41 @@
+.body {
+    font-family: 'Sancreek', serif;
+}
+
+.h4 {
+      font-family: 'Sancreek', serif;
+  }
+/*
+H1 { color: maroon }
+H2 { color: olive }
+
+.button-group .li {
+	color:black;
+	background: 803D29;
+}
+*/
+.wmd-panel {
+    margin-left: 0 !important;
+    margin-right: 0 !important;
+}
+
+.comment-reply {
+    display: none
+}
+
+@import 'foundation';
+
+@include foundation-xy-grid-classes(
+/*
+options
+  $base-grid: true,
+  $margin-grid: true,
+  $padding-grid: true,
+  $block-grid: true,
+  $collapse: true,
+  $offset: true,
+  $vertical-grid: true,
+  $frame-grid: true
+*/
+);
+
